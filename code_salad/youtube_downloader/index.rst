@@ -31,18 +31,19 @@ After fiddling around with the firefox developer tools for a while I stumbled
 on a quick and easy way to gather metadata and get to the video streams.
 Initially I tried just emulating what my browser does to crawl the source
 code and extract the information, but then I realised that youtube
-actually provides useful json responses outside of the api.
+actually provides useful json responses outside of the api. Here's how to
+use it.
 
 First, we need a mobile user-agent:
 
 .. code-block:: python
 
-    >>> MOBILE_HEADERS = {'User-Agent': 'Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36',
-                          'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en'}
+    >>> headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36',
+                   'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en'}
     >>>
 
 We take the request library of our choice (I went with urllib3 for reasons
-I can't remeber) and make a request:
+I can't remember) and make a request:
 
 
 .. _Fledermann: https://github.com/Fledermann
