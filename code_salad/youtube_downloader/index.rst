@@ -31,8 +31,8 @@ After fiddling around with the firefox developer tools for a while I stumbled
 on a quick and easy way to gather metadata and get to the video streams.
 Initially I tried just emulating what my browser does to crawl the source
 code and extract the information, but then I realised that youtube
-actually provides useful json responses outside of the api. Here's how to
-use it.
+actually provides useful json responses outside of the api. 
+Here's how to use it.
 
 First, we need a mobile user-agent:
 
