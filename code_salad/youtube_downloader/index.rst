@@ -4,6 +4,8 @@ Youtube Downloader
 By Fledermann_, 2019-01-26
 
 .. image :: img/screen_ff_ajax.png
+    :width: 50%
+    :align: center
 
 After using the very capable tool youtube-dl_ for a while I wanted to
 to use it as a module in a script, but quickly realised that the user
