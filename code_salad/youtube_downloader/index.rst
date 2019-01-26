@@ -43,7 +43,13 @@ First, we need a mobile user-agent:
     >>>
 
 We take the request library of our choice (I went with urllib3 for reasons
-I can't remember) and make a request:
+I can't remember) and make a request to the mobile youtube site:
+
+.. code-block:: python
+
+    >>> from urllib3 import HTTPSConnetionPool
+    >>> http_mainhost = HTTPSConnectionPool('m.youtube.com', headers=headers)
+
 
 
 .. _Fledermann: https://github.com/Fledermann
