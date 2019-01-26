@@ -5,6 +5,7 @@ By Fledermann_, 2019-01-26
 
 
 .. raw:: html
+
     <p align="center">
         <img src="img/screen_ff_ajax.png" width="50%">
     </p>
