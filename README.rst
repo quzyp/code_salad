@@ -8,6 +8,13 @@ In a way, it is a reminder to myself and a graveyard for ideas without a
 useful application (yet).
 
 
+Content
+_______
+
+- `Test one <code_salad/test_one/index.rst>`_
+- `Dividing by Zero <code_salad/dividing_by_zero/index.rst>`_
+
+
 Contributing
 ____________
 
@@ -17,11 +24,3 @@ Don't let all those ideas and knowledge go to waste.
 For now, everything needs to be added manually, but that shouldn't be too much
 of a problem - create a folder, put your code and the index.rst (or .md or whatever) 
 there and link it here from the README.
-
-
-Content
-_______
-
-- `Test one <code_salad/test_one/index.rst>`_
-- `Dividing by Zero <code_salad/dividing_by_zero/index.rst>`_
-
