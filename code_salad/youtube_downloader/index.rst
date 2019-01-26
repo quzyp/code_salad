@@ -3,9 +3,10 @@ Youtube Downloader
 
 By Fledermann_, 2019-01-26
 
-.. image :: img/screen_ff_ajax.png
-    :width: 462px
-    :align: center
+ +---------------+-----------+
+ | |screenshot1| +  Caption  +
+ +---------------+-----------+
+
 
 After using the very capable tool youtube-dl_ for a while I wanted to
 to use it as a module in a script, but quickly realised that the user
@@ -23,6 +24,8 @@ be fixed already). So, still youtube-dl required, only with a nicer wrapping.
 After fiddling around with the firefox developer tools for a while I stumbled
 on a quick and easy way to gather metadata and get to the video streams.
 
+.. |screenshot1| image:: img/screen_ff_ajax.png
+    :width: 50%
 
 .. _Fledermann: https://github.com/Fledermann
 .. _youtube-dl: https://github.com/rg3/youtube-dl/
