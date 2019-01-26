@@ -4,7 +4,7 @@ Youtube Downloader
 By Fledermann_, 2019-01-26
 
 .. image :: img/screen_ff_ajax.png
-    :width: 50%
+    :width: 462px
     :align: center
 
 After using the very capable tool youtube-dl_ for a while I wanted to
