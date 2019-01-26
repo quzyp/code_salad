@@ -22,6 +22,6 @@ there and link it here from the README.
 Content
 _______
 
-- `Test one <_code_salad/test_one/index.rst>`_
-- `Dividing by Zero <_code_salad/dividing_by_zero/index.rst>`_
+- `Test one <code_salad/test_one/index.rst>`_
+- `Dividing by Zero <code_salad/dividing_by_zero/index.rst>`_
 
