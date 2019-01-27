@@ -2,11 +2,10 @@
 Introduction
 ============
 
-Code salad is a place where I put more or less interesting pieces of python
-code and illustrate the reasoning and motivation behind them. 
-In a way, it is a reminder to myself and a graveyard for ideas without a
-useful application (yet).
-
+Code Salad is an unordered collection of more or less interesting pieces of 
+python code, along with essays and illustrations. 
+Interesting code snippets, terrible ideas and elegant solutions for problems
+with may or may not exist.
 
 Content
 _______
