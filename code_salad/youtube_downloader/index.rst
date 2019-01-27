@@ -76,7 +76,8 @@ streams.
 
 It turns out there are plenty of streams for this video - which makes sense
 considering that every video is available in different resolutions, frame rates 
-and codecs. Since the information in 'adaptive_fmts' is several long urls
+and codecs. Audio and Video are almost always seperate streams. 
+Since the information in 'adaptive_fmts' is several long urls
 with all the information as parameters, let's extract the parameters to
 make it more readable.
 
@@ -93,10 +94,39 @@ make it more readable.
             stream[key] = value
         streams.append(stream)
 
-       
+After we have all the streams now, it's easy to filter by video quality,
+bitrate or codec (Youtube offers mp4 and webm). To keep things simple
+I simply take the first mp4 video stream and the first mp4 audio stream.
+
+.. code-block:: python
+
+    >>> video = [x for x in streams if x['type'].startswith('video/mp4')][0]
+    >>> audio = [x for x in streams if x['type'].startswith('audio/mp4')][0]
+
+Theoretically, we can download the files `video['url']` and `audio['url']`
+already and we're done. But Youtube doesn't like that and throttles the
+bandwith - we need to use DASH_. That is a technique for adaptive streaming
+and what your browser uses to keep the video from stuttering. Basically,
+the browser requests only the next X MiB of the video, determines if the
+download rate is good enough for uninterrupted playback, and then requests
+the next X MiB. If the transfer is too slow, the browser requests the next
+bit of video in a lower quality instead. 
+
+To be honest, a proper implementation of DASH would be a lot more sophisticated.
+We could do a lot more by using the `DASH manifest` file - but for now, I'm
+satisfied with a quick-and-dirty solution. And that means: append parameters
+to the request which tell Youtube the part of the video we want. To get the
+first 100 bytes, we would append `?range=0-100` to the file url. If the 
+requestet part is too big, youtube will throttle the bandwith. I found
+10MiB to be a good chunk size without experiencing slowdowns.
+
+
+
+
 
 .. _Fledermann: https://github.com/Fledermann
 .. _youtube-dl: https://github.com/rg3/youtube-dl/
 .. _`extractor folder`: https://github.com/rg3/youtube-dl/tree/master/youtube_dl/extractor
 .. _pafy: https://github.com/mps-youtube/pafy
 .. _requests: http://docs.python-requests.org/en/master/
+.. _DASH: https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP
