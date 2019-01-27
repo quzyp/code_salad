@@ -1,4 +1,4 @@
-Youtube Downloader
+Downloading from Youtube
 ==================
 
 By Fledermann_, 2019-01-26
@@ -76,7 +76,7 @@ streams.
 
 It turns out there are plenty of streams for this video - which makes sense
 considering that every video is available in different resolutions, frame rates 
-and codecs. Audio and Video are almost always seperate streams. 
+and codecs. Audio and video are almost always seperate streams. 
 Since the information in 'adaptive_fmts' is several long urls
 with all the information as parameters, let's extract the parameters to
 make it more readable.
@@ -96,14 +96,14 @@ make it more readable.
 
 After we have all the streams now, it's easy to filter by video quality,
 bitrate or codec (Youtube offers mp4 and webm). To keep things simple
-I simply take the first mp4 video stream and the first mp4 audio stream.
+I just take the first mp4 video stream and the first mp4 audio stream.
 
 .. code-block:: python
 
     >>> video = [x for x in streams if x['type'].startswith('video/mp4')][0]
     >>> audio = [x for x in streams if x['type'].startswith('audio/mp4')][0]
 
-Theoretically, we can download the files `video['url']` and `audio['url']`
+Theoretically, we can download the files :code:`video['url']` and :code:`audio['url']`
 already and we're done. But Youtube doesn't like that and throttles the
 bandwith - we need to use DASH_. That is a technique for adaptive streaming
 and what your browser uses to keep the video from stuttering. Basically,
@@ -116,11 +116,39 @@ To be honest, a proper implementation of DASH would be a lot more sophisticated.
 We could do a lot more by using the `DASH manifest` file - but for now, I'm
 satisfied with a quick-and-dirty solution. And that means: append parameters
 to the request which tell Youtube the part of the video we want. To get the
-first 100 bytes, we would append `?range=0-100` to the file url. If the 
+first 100 bytes, we would append :code:`?range=0-100` to the file url. If the 
 requestet part is too big, youtube will throttle the bandwith. I found
 10MiB to be a good chunk size without experiencing slowdowns.
+Each chunk is requested, streamed in 128KiB chunks and written to disk.
+
+.. code-block:: python
+
+    file_name = 'file.mp4'
+    url = video['url']
+    r = requests.get(url, stream=True)
+    filesize = int(r.headers['Content-Length'])
+    chunk_size = 1024 * 1024 * 10
+    dl_chunk_size = 1024 * 128
+    chunk_start = 0
+    progress = 0
+    time_start = time.time()
+    while progress < filesize:
+        chunk_end = chunk_start + chunk_size - 1
+        params = {'range': f'{chunk_start}-{chunk_end}'}
+        response = requests.get(url, stream=True, params=params)
+        with open(file_name, 'ab') as f:
+            for chunk in response.iter_content(dl_chunk_size):
+                f.write(chunk)
+                progress += sys.getsizeof(chunk)
+                avg_dl_rate = progress / 1024 / (time.time() - time_start)
+                print(f'Average speed: \r{avg_dl_rate:.0f} kb/s', end='')
+        chunk_start = chunk_end + 1
 
 
+After doing this with the video and audio file they can be put together
+with a program like ffmpeg: :code:`ffmpeg -i {audio} -i {video} -c:a copy -c:v copy {out_file}`.
+
+Have a look at `main.py <main.py>`_ for a working code example.
 
 
 
