@@ -11,8 +11,7 @@ useful application (yet).
 Content
 _______
 
-- `Test one <code_salad/test_one/index.rst>`_
-- `Dividing by Zero <code_salad/dividing_by_zero/index.rst>`_
+- `Downloading from Youtube <code_salad/youtube_downloader/index.rst>`_
 
 
 Contributing
