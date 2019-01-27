@@ -31,8 +31,8 @@ After fiddling around with the firefox developer tools for a while I stumbled
 on a quick and easy way to gather metadata and get to the video streams.
 Initially I tried just emulating what my browser does to crawl the source
 code and extract the information, but then I realised that youtube
-actually provides useful json responses outside of the api. 
-Here's how to use it.
+actually provides useful json responses outside of the api. Here's how to
+use it.
 
 First, we need a mobile user-agent:
 
@@ -42,17 +42,61 @@ First, we need a mobile user-agent:
                    'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en'}
     >>>
 
-We take the request library of our choice (I went with urllib3 for reasons
-I can't remember) and make a request to the mobile youtube site:
+Then we take the request library of our choice and make a request to the mobile 
+youtube site. I will be using requests_ in this example, but any other method will do.
+I chose a short Numberphile video with the regular url `https://www.youtube.com/watch?v=Mfk_L4Nx2ZI`.
+The part after `?v=` is the video ID. 
 
 .. code-block:: python
 
-    >>> from urllib3 import HTTPSConnetionPool
-    >>> http_mainhost = HTTPSConnectionPool('m.youtube.com', headers=headers)
+    >>> import requests
+    >>> video_id = 'Mfk_L4Nx2ZI'
+    >>> params = {'ajax': '1', 'v': video_id}
+    >>> r = requests.get('https://m.youtube.com/watch', params=params, headers=headers)
 
+The `params` are just the http GET parameters - the equivalent browser url would
+look like `https://m.youtube.com/watch?v=Mfk_L4Nx2ZI&ajax=1`. 
 
+If we take a look at the response content we see that it looks like json - great!
+The first four characters are garbage, though, so we need to cut them off.
+
+.. code-block:: python
+
+    >>> import json
+    >>> j = json.loads(r.text[4:])
+
+The json is deeply nested, so it takes a bit of digging and prettyprinting to
+find the data we're interested in. For now, I only need the title and the
+streams.
+
+.. code-block:: python
+
+    >>> title = j['content']['video']['title']
+    >>> stream_info = j['content']['swfcfg']['args']['adaptive_fmts']
+
+It turns out there are plenty of streams for this video - which makes sense
+considering that every video is available in different resolutions, frame rates 
+and codecs. Since the information in 'adaptive_fmts' is several long urls
+with all the information as parameters, let's extract the parameters to
+make it more readable.
+
+.. code-block:: python
+
+    import urllib
+
+    streams = list()
+    for s in stream_info.split(','):
+        stream = dict()
+        for parameter in s.split('&'):
+            key, value = parameter.split('=')
+            value = urllib.parse.unquote(value)
+            stream[key] = value
+        streams.append(stream)
+
+       
 
 .. _Fledermann: https://github.com/Fledermann
 .. _youtube-dl: https://github.com/rg3/youtube-dl/
 .. _`extractor folder`: https://github.com/rg3/youtube-dl/tree/master/youtube_dl/extractor
 .. _pafy: https://github.com/mps-youtube/pafy
+.. _requests: http://docs.python-requests.org/en/master/
