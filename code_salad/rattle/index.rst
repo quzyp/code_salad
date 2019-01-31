@@ -31,10 +31,10 @@ want to write Python.
 As I set out to find a solution, I discovered many projects which aim to
 string JavaScript and Python together:
 
- * pyjs_, which transpiled Python to JS (dead)
- * reahl_, which is so pythonic that it chose to abstract away even HTML and CSS (why?)
- * flexx_, which also transpiles to JS (active)
- * pypyjs_
+* pyjs_, which transpiled Python to JS (dead)
+* reahl_, which is so pythonic that it chose to abstract away even HTML and CSS (why?)
+* flexx_, which also transpiles to JS (active)
+* pypyjs_
 
 
 and many smaller ones, like WDOM_. WDOM is propably pretty close to what I
@@ -253,9 +253,9 @@ DOM.
 And that's it. It's not much, but it is at least easily extensible. A few
 potential problems:
 
- * I don't know how expensive firing so many requests is
- * I don't know if the ``obj.prop()`` method works for all elements, like ``<select>``` and hundreds of others
- * a timer is needed for things which don't depend on user input, like a loading bar
+* I don't know how expensive firing so many requests is
+* I don't know if the ``obj.prop()`` method works for all elements, like ``<select>``` and hundreds of others
+* a timer is needed for things which don't depend on user input, like a loading bar
 
 Still, it was an interesting little project which may someday have a future.
 Alternatively, I could just use a real library.
