@@ -6,9 +6,13 @@ By Fledermann_, 2019-01-31
 *Note: the source code is in this very GitHub directory if you want to dive
 right in*
 
+.. raw:: html
+
     <p align="center">
         <img src="img/cast.gif" width="50%">
     </p>
+
+
 
 Have you heard of tkinter? PyQT5? WxPython? Kivy? PyGTK, no, wait, PyGObject?
 PySide? PySimpleGUI, which strings some of the formerly mentioned together?
