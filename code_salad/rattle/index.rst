@@ -6,6 +6,10 @@ By Fledermann_, 2019-01-31
 *Note: the source code is in this very GitHub directory if you want to dive
 right in*
 
+    <p align="center">
+        <img src="img/cast.gif" width="50%">
+    </p>
+
 Have you heard of tkinter? PyQT5? WxPython? Kivy? PyGTK, no, wait, PyGObject?
 PySide? PySimpleGUI, which strings some of the formerly mentioned together?
 
@@ -250,8 +254,8 @@ The ``queue`` here is a list of widgets and their attributes which have changed
 since the last request, so we can then send these back for JS to manipulate the
 DOM.
 
-And that's it. It's not much, but it is at least easily extensible. A few
-potential problems:
+And that's it. Clone and run ``my_app.py`` to try it out. It's not much, 
+but it is at least easily extensible. A few potential problems:
 
 * I don't know how expensive firing so many requests is
 * I don't know if the ``obj.prop()`` method works for all elements, like ``<select>``` and hundreds of others
