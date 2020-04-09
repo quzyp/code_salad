@@ -38,26 +38,33 @@ def get_metadata(video_id: str) -> dict:
     youtube video. """
     headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36',
                        'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'en'}
-    params = {'ajax': '1', 'v': video_id}
-    r = requests.get('https://m.youtube.com/watch', params=params, headers=headers)
-    j = json.loads(r.text[4:])
-    title = j['content']['video']['title']
-    stream_info = j['content']['swfcfg']['args']['adaptive_fmts']
-    streams = list()
-    for s in stream_info.split(','):
-        stream = dict()
-        for parameter in s.split('&'):
-            key, value = parameter.split('=')
-            value = urllib.parse.unquote(value)
-            stream[key] = value
-        streams.append(stream)
+    params = {'pbj': '1', 'v': video_id}
+    #r = requests.get('https://m.youtube.com/watch', params=params, headers=headers)
+    #j = json.loads(r.text)
+    with open('pbj.txt', 'r') as f:
+        j = json.load(f)
+    title = 'foo'# j['content']['video']['title']
+    stream_info = j['JSON'][2]['player']['args']['player_response']
+    jj = json.loads(stream_info)
+    streams = jj['streamingData']['adaptiveFormats']
+    #for s in stream_info.split(','):
+    #    stream = dict()
+    #    for parameter in s.split('&'):
+    #        try:
+    #            key, value = parameter.split('=')
+    #        except ValueError:
+    #            continue
+    #        value = urllib.parse.unquote(value)
+    #        stream[key] = value
+    #    streams.append(stream)
     return dict(title=title, streams=streams)
 
 
 if __name__ == '__main__':
-    video_id = 'Mfk_L4Nx2ZI'
+    video_id = '2_e3lfnkrlY'
     md = get_metadata(video_id)
-    video = [x for x in md['streams'] if x['type'].startswith('video/mp4')][0]
-    audio = [x for x in md['streams'] if x['type'].startswith('audio/mp4')][0]
+    # print(md['streams'])
+    video = [x for x in md['streams'] if x['mimeType'].startswith('video/mp4')][0]
+    audio = [x for x in md['streams'] if x['mimeType'].startswith('audio/mp4')][0]
     download_file(video['url'], pathlib.Path('video.mp4'))
     download_file(audio['url'], pathlib.Path('audio.mp4a'))
